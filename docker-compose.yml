@@ -10,6 +10,10 @@ x-web-defaults: &web-defaults
     - ./frontend:/frontend
   depends_on:
     - redis
+  networks:
+    - default
+    - databases
+    - home
   environment:
     OCTOPRINT_TUNNEL_PORT_RANGE: '0-0'
     EMAIL_HOST: '${EMAIL_HOST-}'
@@ -69,6 +73,11 @@ services:
     hostname: tasks
     command: sh -c "celery -A config worker --beat -l info -c 2 -Q realtime,celery"
 
-  redis:
-    restart: unless-stopped
-    image: redis:7.2-alpine
+networks:
+  default:
+    name: obico
+    external: true
+  databases:
+    external: true
+  home:
+    external: true
