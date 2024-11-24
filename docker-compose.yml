@@ -1,5 +1,3 @@
-version: '2.4'
-
 x-web-defaults: &web-defaults
   restart: unless-stopped
   build:
@@ -8,8 +6,6 @@ x-web-defaults: &web-defaults
   volumes:
     - ./backend:/app
     - ./frontend:/frontend
-  depends_on:
-    - redis
   networks:
     - default
     - databases
